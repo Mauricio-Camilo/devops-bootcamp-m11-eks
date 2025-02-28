@@ -1,0 +1,55 @@
+Install kubectl on Jenkins Server
+
+O primeiro passo é logar na instância na qual está rodando o Jenkins no servidor de nuvem e entrar no container que está rodando o Jenkins.
+
+Os comandos utilizados para instalação do kubectl seguem abaixo:
+
+apt update
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+chmod +x kubectl
+
+mv kubectl /usr/local/bin/
+
+install AWS IAM Authenticator
+
+Essa instalação é específica para o uso do EKS da AWS.
+
+curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.6.11/aws-iam-authenticator_0.6.11_linux_amd64
+
+chmod +x ./aws-iam-authenticator
+
+mv ./aws-iam-authenticator /usr/local/bin
+
+Create kubeconfig file for Jenkins
+
+Esse arquivo foi criado manualmente fora do container, pois ele não contém as ferramentas necessárias pra isso. O conteúdo desse arquivo está em config.yaml. Ele foi ajustado com os valores do cluster name, endpoint e certificate authority. Em seguida ele foi transferido para o defult config location dentro do container
+
+Foi criado o diretorio .kube dentro do container e em seguida o config foi copiado com o seguinte comando:
+
+docker cp config 73496da0a944:/var/jenkins_home/.kube/
+
+Create AWS Credentials
+
+Como boa prática, pode-se criar um AWS IAM User para o Jenkins, porém aqui será usado o admin user do Jenkins.
+
+Para esse projeto, foi adicionado no repositório da pipeline java-maven-app uma branch chamada deploy-on-k8s. Dentro dessa pipeline, novas credenciais do tipo Secret text foram criadas utilizando as credenciais da aws que estão configuradas na máquina local
+
+Configure jenkinsfile to deploy to eks 
+
+Dentro do stage deploy, é possível rodar comandos de kubectl na pipeline, para que ela crie um deployment. E também, foi usado as como variáveis de ambiente as credenciais inseridas na pipeline. 
+
+Figura 1
+
+Observa-se na figura acima que a pipeline rodou com sucesso o kubectl, e entrando nos logs da pipeline, é possível ver a execução do comando.
+
+scp -i jenkins-keypair.pem ubuntu@3.91.81.105:/home/ubuntu/jenkins_data /home/mauricio/jenkins
+
+scp -i jenkins-keypair.pem -r ubuntu@3.91.81.105:/home/ubuntu/jenkins.tar.gz /home/mauricio/jenkins
+
+
+
+
+
+

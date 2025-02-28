@@ -1,0 +1,35 @@
+Nesse projeto foi criado um fargate profile, cuja diferença é a atuação como serverless, ou seja, nenhuma instancia será criada na minha conta, e sim gerenciada pela AWS manage account.
+
+Create IAm role for fargate
+
+Uma regra com permissões específicas deve ser criada previamente para habilitar que o fargate trabalhe com alguns recursos e serviços da minha conta. 
+
+Foi escolhido um template de role ECS - Fargate pod, e ele já contem uma policy padrão AmazonEKSFargatePodExecutionRolePolicy que será usada.
+
+Create Fargate Profile
+
+UM fargate profile vai ler um arquivo de yaml de deployment por exemplo, e vai decidir onde o pod será executado (scheduled). Na criação desse profile, foi usado o eks criado no projeto anterior, ele permite ter tanto o node group quanto o fargate.
+
+Nas configurações, o pod execution role é a role que foi criada no passo anterior, a vpc do eks também foi escolhida, para atribuir aos pods endereços de IP (vai usar apenas a private subnet). Em pod selector, foi definido um namespace selector, o que significa que ele vai ler o namespace do pod configuration para saber qual pod será scheduled. Foi configurado um namespace dev tanto no profile quanto o nginx-config.yaml
+
+Em match labels, pode ser selecionado quais labels dentro do namespace ele vai ler para executar os pods. Um label profile:fargate foi criado. 
+
+Deploy pod through fargate
+
+Primeiro o namespace dev foi criado pelo comando:
+
+kubectl create ns dev
+
+Em seguida, o mesmo deployment do nginx foi criado.
+
+kubectl apply -f nginx-config.yaml 
+
+Figura 1
+
+Pode se ver na figura acima que o node do tipo fargate foi gerado.
+
+É importante que todos os recursos usados nesse projeto sejam destruidos, para que não gerem custos desnecessários na conta da AWS. Primeiro o node group e o fargate profile foram excluidos, para então excluir o eks cluster.
+
+
+
+
