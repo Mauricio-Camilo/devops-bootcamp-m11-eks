@@ -427,7 +427,7 @@ Kubernetes, Jenkins, AWS EKS, Docker Hub, Java, Maven, Linux, Docker,Git
 
 - Using the java-maven-app repository
 
-  For this project, the java-maven-app repository is used, specifically the jenkins-version branch. The Jenkinsfile in this branch contains the entire code internally and includes image versioning.
+  For this project, the java-maven-app repository is used, specifically the jenkins-version branch (https://github.com/Mauricio-Camilo/java-maven-app/tree/jenkins-version). The Jenkinsfile in this branch contains the entire code internally and includes image versioning.
 
 1. Create Deployment and Service & Adjust Jenkinsfile
 
