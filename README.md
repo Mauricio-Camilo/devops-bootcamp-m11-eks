@@ -454,7 +454,8 @@ Kubernetes, Jenkins, AWS EKS, Docker Hub, Java, Maven, Linux, Docker,Git
 
 2. Create Secret for DockerHub Credentials
 
-  To allow Kubernetes to fetch the new image from the private repository during pipeline execution, authentication must be handled within the cluster. The credentials from the build image stage are reused in the deploy stage via a Kubernetes secret.
+   To allow Kubernetes to fetch the new image from the private repository during pipeline execution, authentication must be handled within the cluster. The credentials from the build image 
+   stage are reused in the deploy stage via a Kubernetes secret.
 
 - Best Practices for Secrets
 
