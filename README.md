@@ -368,7 +368,7 @@ Kubernetes, Jenkins, AWS EKS, Docker, Linux
 
 - Install AWS IAM Authenticator
 
-This installation is specific to using AWS EKS.
+  This installation is specific to using AWS EKS.
 
   ```
     curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.6.11/aws-iam-authenticator_0.6.11_linux_amd64
