@@ -476,29 +476,29 @@ Kubernetes, Jenkins, AWS EKS, Docker Hub, Java, Maven, Linux, Docker,Git
 
 3. Running the Jenkins Pipeline
 
-  After pushing changes to the repository, the pipeline executed successfully.
+   After pushing changes to the repository, the pipeline executed successfully.
 
-  ![Diagram](./images/eks-project7-1.png)
+   ![Diagram](./images/eks-project7-1.png)
 
-  Logs confirm the kubectl commands were executed without errors.
+   Logs confirm the kubectl commands were executed without errors.
 
 - AWS ECR Integration
 
-1. Create an ECR Repository
+  1. Create an ECR Repository
 
   A private repository named java-maven-app was created in AWS ECR with default configurations. ECR provides push commands for login and image upload.
 
-2. Create Credentials in Jenkins
+  2. Create Credentials in Jenkins
 
-Using the login command from ECR:
+  Using the login command from ECR:
 
   ```
     aws ecr get-login-password --region us-east-1
   ```
 
-  The password is extracted, and the username (AWS) is used for authentication. These credentials were added to Jenkins, along with the repository URL provided by AWS.
+   The password is extracted, and the username (AWS) is used for authentication. These credentials were added to Jenkins, along with the repository URL provided by AWS.
 
-3. Create Secret for AWS ECR
+  3. Create Secret for AWS ECR
 
   The Kubernetes secret for ECR credentials was created using the following command:
 
@@ -511,14 +511,14 @@ Using the login command from ECR:
 
   This secret was then used in the deployment file to connect to the ECR repository.
 
-4. Update Jenkinsfile
+  4. Update Jenkinsfile
 
   The Jenkinsfile was updated to:
 
     - Replace the credentialsId with ecr-credentials.
     - Update the repository URL in the build stage.
 
-5. Run Pipeline
+  5. Run Pipeline
 
   After committing changes, the pipeline ran successfully.
 
